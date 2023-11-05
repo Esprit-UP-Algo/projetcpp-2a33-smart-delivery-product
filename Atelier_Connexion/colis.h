@@ -33,6 +33,7 @@ QSqlQueryModel * afficher();
 
 bool modifierColis();
 QSqlQueryModel *  sortDatabaseById();
+void displayItemDetails(int id) ;
 };
 
 

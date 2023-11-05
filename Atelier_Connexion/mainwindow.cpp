@@ -44,6 +44,9 @@ void MainWindow::on_B_ajouter_clicked()
      if(test)
      {
             ui->tab_c->setModel(C.afficher());
+
+              ui->tab_ajout->setModel(C.afficher());
+
          QMessageBox::information(nullptr, QObject::tr("database is open"),
                      QObject::tr("connection successful.\n"
                                  "Click Cancel to exit."), QMessageBox::Cancel);
@@ -121,4 +124,14 @@ void MainWindow::on_tri_clicked()
         QMessageBox::critical(nullptr, QObject::tr("not ok"),
                                  QObject::tr("Update non effectué\n"
                                              "Click Cancel to exit."), QMessageBox::Cancel);*/
+}
+
+void MainWindow::on_Rech_clicked()
+{
+    int id;
+    Colis c;
+    id=ui->Rech_l->text().toInt();
+
+    c.displayItemDetails(id) ;
+
 }

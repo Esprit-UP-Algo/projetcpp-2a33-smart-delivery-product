@@ -5,6 +5,13 @@
 #include <QSqlQueryModel>
 #include <iostream>
 
+#include <QSqlDatabase>
+
+#include <QMessageBox>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QDialog>
+
 using namespace std;
 Colis::Colis()
 {
@@ -126,9 +133,42 @@ QSqlQueryModel *  Colis::sortDatabaseById() {
    } else {
        qWarning() << "Query failed: " << query.lastError().text();
    }*/
+}
+void  Colis::displayItemDetails(int id)
+{
+    QSqlQuery query;
+    query.prepare("SELECT ID, POIDS, VOLUME, ETAT FROM colis WHERE ID = :id");
+    query.bindValue(":id", id);
 
+    if (query.exec()) {
+           // Create a dialog to display the item details
+           QDialog dialog;
+           dialog.setWindowTitle("Item Details");
 
+           QVBoxLayout layout(&dialog);
+           QLabel* label = new QLabel;
 
+           if (query.next()) {
+               int itemId = query.value(0).toInt();
+               int poids = query.value(1).toInt();
+               int volume = query.value(2).toInt();
+               QString etat = query.value(3).toString();
 
+               label->setText(QString("ID: %1\nPOIDS: %2\nVOLUME: %3\nETAT: %4")
+                                  .arg(itemId)
+                                  .arg(poids)
+                                  .arg(volume)
+                                  .arg(etat));
+
+               layout.addWidget(label);
+           } else {
+               QMessageBox::warning(&dialog, "Item Not Found", "Item with ID " + QString::number(id) + " not found.");
+               return;
+           }
+
+           dialog.exec();
+       } else {
+           QMessageBox::critical(0, "Query Error", "Query failed: " + query.lastError().text());
+       }
 
 }
