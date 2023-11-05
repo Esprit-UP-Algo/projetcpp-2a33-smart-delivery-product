@@ -104,3 +104,21 @@ void MainWindow::on_aff_clicked()
     Colis C;
        ui->tab_c->setModel(C.afficher());
 }
+
+void MainWindow::on_tri_clicked()
+{
+    Colis C;
+    QSqlQueryModel MyModel;
+    ui->tab_c->setModel(C.sortDatabaseById());
+   /* if (test)
+    {
+        QMessageBox::information(nullptr, QObject::tr("ok"),
+                                 QObject::tr("Update effectué\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);
+        ui->tab_c->setModel(C.afficher());
+    }
+    else
+        QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                                 QObject::tr("Update non effectué\n"
+                                             "Click Cancel to exit."), QMessageBox::Cancel);*/
+}

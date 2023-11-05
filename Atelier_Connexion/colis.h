@@ -2,7 +2,8 @@
 #define COLIS_H
 #include"QString"
 #include <QSqlQueryModel>
-
+#include<QtSql>
+#include"sorts.h"
 class Colis
 {
 private:
@@ -29,7 +30,9 @@ public:
     bool ajouter();
 bool supprimer(int);
 QSqlQueryModel * afficher();
+
 bool modifierColis();
+QSqlQueryModel *  sortDatabaseById();
 };
 
 

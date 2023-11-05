@@ -29,12 +29,14 @@ SOURCES += \
     colis.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    sorts.cpp
 
 HEADERS += \
     colis.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    sorts.h
 
 FORMS += \
         mainwindow.ui

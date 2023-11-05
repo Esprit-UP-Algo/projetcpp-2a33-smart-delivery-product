@@ -94,5 +94,41 @@ bool Colis::modifierColis()
 
            return query.exec();
 
+}
+
+
+QSqlQueryModel *  Colis::sortDatabaseById() {
+    QSqlQuery query;
+  // query.prepare("SELECT * FROM colis ORDER BY ID");
+   QSqlQueryModel * model=new QSqlQueryModel();
+   model->setQuery("SELECT * FROM colis ORDER BY ID");
+   model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+       model->setHeaderData(1, Qt::Horizontal, QObject::tr("POIDS"));
+       model->setHeaderData(2, Qt::Horizontal, QObject::tr("VOLUME"));
+       model->setHeaderData(3, Qt::Horizontal, QObject::tr("ETAT"));
+
+       return model;
+   /*if (query.exec()) {
+       while (query.next()) {
+           // Process each row of data here
+           int id = query.value(0).toInt();
+           // Retrieve other columns as needed
+           int poids = query.value(1).toInt();
+           int volume = query.value(2).toInt();
+           QString etat = query.value(3).toString();
+
+           // Perform actions with the retrieved data
+           qDebug() << "ID: " << id;
+           qDebug() << "POIDS: " << poids;
+           qDebug() << "VOLUME: " << volume;
+           qDebug() << "ETAT: " << etat;
+       }
+   } else {
+       qWarning() << "Query failed: " << query.lastError().text();
+   }*/
+
+
+
+
 
 }
