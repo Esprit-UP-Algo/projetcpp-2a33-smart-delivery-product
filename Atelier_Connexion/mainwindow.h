@@ -26,6 +26,8 @@ private slots:
 
     void on_mod_clicked();
 
+    void on_aff_clicked();
+
 private:
     Ui::MainWindow *ui;
     Colis Ctmp;

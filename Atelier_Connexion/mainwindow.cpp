@@ -7,7 +7,9 @@
 #include <QMessageBox>
 #include "connection.h"
 #include <QSqlQueryModel>
+#include <iostream>
 
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -41,7 +43,7 @@ void MainWindow::on_B_ajouter_clicked()
      bool test=C.ajouter();
      if(test)
      {
-         ui->tab_c->setModel(Ctmp.afficher());
+            ui->tab_c->setModel(C.afficher());
          QMessageBox::information(nullptr, QObject::tr("database is open"),
                      QObject::tr("connection successful.\n"
                                  "Click Cancel to exit."), QMessageBox::Cancel);
@@ -75,7 +77,7 @@ void MainWindow::on_supp_clicked()
 
 void MainWindow::on_mod_clicked()
 {
-    int id = ui->le_id_modifier->text().toInt(); //
+    int id = ui->le_id_modifier->text().toInt();
 
         float nouveauPoids = ui->nouveau_poids->text().toFloat();
         float nouveauVolume = ui->nouveau_volume->text().toFloat();
@@ -83,6 +85,7 @@ void MainWindow::on_mod_clicked()
          Colis C(id, nouveauPoids, nouveauVolume, nouvelEtat);
 
         bool test=C.modifierColis() ;
+
        if (test)
        {
            QMessageBox::information(nullptr, QObject::tr("ok"),
@@ -94,4 +97,10 @@ void MainWindow::on_mod_clicked()
            QMessageBox::critical(nullptr, QObject::tr("not ok"),
                                     QObject::tr("Update non effectué\n"
                                                 "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_aff_clicked()
+{
+    Colis C;
+       ui->tab_c->setModel(C.afficher());
 }

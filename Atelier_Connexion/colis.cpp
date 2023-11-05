@@ -3,6 +3,9 @@
 #include"QSqlQuery"
 #include"QtDebug"
 #include <QSqlQueryModel>
+#include <iostream>
+
+using namespace std;
 Colis::Colis()
 {
 Id_colis=0;
@@ -78,13 +81,13 @@ bool Colis::modifierColis()
 
     QString poids_string=QString::number((poids));
      QString volume_string=QString::number((volume));
-           query.prepare("UPDATE COLIS SET  (ID ,POIDS,VOLUME,ETAT) "
-                         "VALUES (:id, :poids, :volume, :etat)");
+           query.prepare("UPDATE colis SET   POIDS=:poids,VOLUME=:volume,ETAT=:etat WHERE ID=:id");
+
            query.bindValue(":id", Id_colis);
            query.bindValue(":poids", poids_string);
            query.bindValue(":volume", volume_string);
-
            query.bindValue(":etat", etat);
+
 
 
 
