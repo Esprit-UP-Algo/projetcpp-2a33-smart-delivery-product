@@ -135,3 +135,73 @@ void MainWindow::on_Rech_clicked()
     c.displayItemDetails(id) ;
 
 }
+
+void MainWindow::on_mod1_clicked()
+{
+    int id;
+    id=ui->le->text().toInt();
+
+    float poids;
+    poids=ui->poids->text().toFloat();
+
+    float volume;
+     volume=ui->volume->text().toFloat();
+     QString etat;
+   etat=ui->etat->text();
+
+
+
+         Colis C(id, poids, volume, etat);
+
+        bool test=C.modifierColis() ;
+
+       if (test)
+       {
+           QMessageBox::information(nullptr, QObject::tr("ok"),
+                                    QObject::tr("Update effectué\n"
+                                                "Click Cancel to exit."), QMessageBox::Cancel);
+           ui->tab_ajout->setModel(C.afficher());
+       }
+       else
+           QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                                    QObject::tr("Update non effectué\n"
+                                                "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_tri_p_clicked()
+{
+    Colis C;
+    QSqlQueryModel MyModel;
+    ui->tab_c->setModel(C.sortDatabaseByPoids());
+}
+
+void MainWindow::on_tri_volume_clicked()
+{
+    Colis C;
+    QSqlQueryModel MyModel;
+    ui->tab_c->setModel(C.sortDatabaseByVolume());
+}
+
+void MainWindow::on_tri_b_clicked()
+{
+    // Get the selected item from the combo box
+       QString selectedOption = ui->combo->currentText();
+       Colis C;
+       if (selectedOption == "id") {
+
+           QSqlQueryModel MyModel;
+           ui->tab_c->setModel(C.sortDatabaseById());
+           } else if (selectedOption == "poids") {
+           QSqlQueryModel MyModel;
+           ui->tab_c->setModel(C.sortDatabaseByPoids());
+           } else if (selectedOption == "volume") {
+           QSqlQueryModel MyModel;
+           ui->tab_c->setModel(C.sortDatabaseByVolume());
+           }
+
+       // Print the selected option
+     //  qDebug() << "Selected Option: " << selectedOption;
+
+       // You can also update a label with the selected option if needed
+       // ui->label->setText("Selected Option:
+}

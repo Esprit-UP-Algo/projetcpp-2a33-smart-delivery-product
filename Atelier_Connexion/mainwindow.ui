@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -68,8 +68,8 @@
       <widget class="QPushButton" name="B_ajouter">
        <property name="geometry">
         <rect>
-         <x>100</x>
-         <y>260</y>
+         <x>10</x>
+         <y>270</y>
          <width>131</width>
          <height>41</height>
         </rect>
@@ -145,6 +145,19 @@
        </property>
        <property name="text">
         <string>etat: casse,non casse</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="mod1">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>270</y>
+         <width>131</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>modifier</string>
        </property>
       </widget>
      </widget>
@@ -228,8 +241,8 @@
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>10</y>
+        <x>50</x>
+        <y>30</y>
         <width>491</width>
         <height>331</height>
        </rect>
@@ -263,8 +276,8 @@
       <widget class="QPushButton" name="supp">
        <property name="geometry">
         <rect>
-         <x>100</x>
-         <y>160</y>
+         <x>40</x>
+         <y>110</y>
          <width>131</width>
          <height>41</height>
         </rect>
@@ -292,7 +305,7 @@
      <widget class="QPushButton" name="aff">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>20</x>
         <y>360</y>
         <width>131</width>
         <height>41</height>
@@ -302,17 +315,42 @@
        <string>Afficher</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="tri">
+     <widget class="QComboBox" name="combo">
       <property name="geometry">
        <rect>
-        <x>410</x>
-        <y>360</y>
-        <width>131</width>
-        <height>41</height>
+        <x>40</x>
+        <y>410</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>poids</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>volume</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QPushButton" name="tri_b">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>410</y>
+        <width>81</width>
+        <height>34</height>
        </rect>
       </property>
       <property name="text">
-       <string>Tri</string>
+       <string>tri</string>
       </property>
      </widget>
     </widget>

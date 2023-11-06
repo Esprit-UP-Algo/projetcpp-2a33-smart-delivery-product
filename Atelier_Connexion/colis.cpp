@@ -172,3 +172,28 @@ void  Colis::displayItemDetails(int id)
        }
 
 }
+QSqlQueryModel *  Colis::sortDatabaseByPoids()
+{
+    QSqlQuery query;
+  // query.prepare("SELECT * FROM colis ORDER BY ID");
+   QSqlQueryModel * model=new QSqlQueryModel();
+   model->setQuery("SELECT * FROM colis ORDER BY POIDS");
+   model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+       model->setHeaderData(1, Qt::Horizontal, QObject::tr("POIDS"));
+       model->setHeaderData(2, Qt::Horizontal, QObject::tr("VOLUME"));
+       model->setHeaderData(3, Qt::Horizontal, QObject::tr("ETAT"));
+       return model;
+
+}
+QSqlQueryModel *  Colis::sortDatabaseByVolume()
+{
+    QSqlQuery query;
+  // query.prepare("SELECT * FROM colis ORDER BY ID");
+   QSqlQueryModel * model=new QSqlQueryModel();
+   model->setQuery("SELECT * FROM colis ORDER BY VOLUME");
+   model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+       model->setHeaderData(1, Qt::Horizontal, QObject::tr("POIDS"));
+       model->setHeaderData(2, Qt::Horizontal, QObject::tr("VOLUME"));
+       model->setHeaderData(3, Qt::Horizontal, QObject::tr("ETAT"));
+       return model;
+}

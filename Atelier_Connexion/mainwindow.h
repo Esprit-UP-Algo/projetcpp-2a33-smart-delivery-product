@@ -32,6 +32,14 @@ private slots:
 
     void on_Rech_clicked();
 
+    void on_mod1_clicked();
+
+    void on_tri_p_clicked();
+
+    void on_tri_volume_clicked();
+
+    void on_tri_b_clicked();
+
 private:
     Ui::MainWindow *ui;
     Colis Ctmp;
