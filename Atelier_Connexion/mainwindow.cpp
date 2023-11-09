@@ -27,15 +27,36 @@ MainWindow::~MainWindow()
 void MainWindow::on_B_ajouter_clicked()
 {
      int id;
-     id=ui->le->text().toInt();
+     bool isInt;
+     id=ui->le->text().toInt(&isInt);
+     if (!isInt) {
 
+         QMessageBox::warning(this, "Invalid Input", "Please enter a valid integer for ID.");
+         return;
+     }
      float poids;
-     poids=ui->poids->text().toFloat();
+     bool isFloat;
+     poids=ui->poids->text().toFloat(&isFloat);
+     if (!isFloat) {
+
+         QMessageBox::warning(this, "Invalid Input", "Please enter a valid float for Poids.");
+         return;
+     }
 
      float volume;
-      volume=ui->volume->text().toFloat();
+      volume=ui->volume->text().toFloat(&isFloat);
+      if (!isFloat) {
+
+          QMessageBox::warning(this, "Invalid Input", "Please enter a valid float for Volume.");
+          return;
+      }
       QString etat;
     etat=ui->etat->text();
+    if (etat != "casse" && etat != "non casse") {
+
+        QMessageBox::warning(this, "Invalid Input", "Please enter either 'casse' or 'non casse' for etat.");
+        return;
+    }
 
 
     Colis C(id,poids,volume,etat);

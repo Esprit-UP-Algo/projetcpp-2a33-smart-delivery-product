@@ -4,9 +4,7 @@
 #include"QtDebug"
 #include <QSqlQueryModel>
 #include <iostream>
-
 #include <QSqlDatabase>
-
 #include <QMessageBox>
 #include <QLabel>
 #include <QVBoxLayout>
