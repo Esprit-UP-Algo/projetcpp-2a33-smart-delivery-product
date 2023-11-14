@@ -10,6 +10,23 @@
 #include <QVBoxLayout>
 #include <QDialog>
 
+#include <QPdfWriter>
+#include <QPainter>
+#include <QFileDialog>
+
+#include <QLabel>
+#include <QTableWidget>
+#include <QTextOption>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+
+#include <QtCharts/QBarSeries>
+#include <QtCharts>
+#include <QtSql>
+#include <QChartView>
+#include <QPieSeries>
+#include <QPieSlice>
 using namespace std;
 Colis::Colis()
 {
@@ -73,11 +90,14 @@ bool Colis::supprimer(int id)
 QSqlQueryModel * Colis::afficher()
 {
     QSqlQueryModel * model=new QSqlQueryModel();
+
+
     model->setQuery("select * from colis");
     model->setHeaderData(0,Qt::Horizontal,QObject::tr("ID"));
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("POIDS"));
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("VOLUME"));
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("ETAT"));
+    model->setHeaderData(1,Qt::Horizontal,QObject::tr("POIDS"));
+    model->setHeaderData(2,Qt::Horizontal,QObject::tr("VOLUME"));
+    model->setHeaderData(3,Qt::Horizontal,QObject::tr("ETAT"));
+
     return model;
 }
 bool Colis::modifierColis()
@@ -113,25 +133,28 @@ QSqlQueryModel *  Colis::sortDatabaseById() {
        model->setHeaderData(3, Qt::Horizontal, QObject::tr("ETAT"));
 
        return model;
-   /*if (query.exec()) {
-       while (query.next()) {
-           // Process each row of data here
-           int id = query.value(0).toInt();
-           // Retrieve other columns as needed
-           int poids = query.value(1).toInt();
-           int volume = query.value(2).toInt();
-           QString etat = query.value(3).toString();
 
-           // Perform actions with the retrieved data
-           qDebug() << "ID: " << id;
-           qDebug() << "POIDS: " << poids;
-           qDebug() << "VOLUME: " << volume;
-           qDebug() << "ETAT: " << etat;
-       }
-   } else {
-       qWarning() << "Query failed: " << query.lastError().text();
-   }*/
 }
+QSqlQueryModel* Colis::rechercher(QString test)
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
+    QSqlQuery query;
+    query.prepare("SELECT * FROM COLIS WHERE ID LIKE :test");
+    query.bindValue(":test", "%" + test + "%");
+    if (query.exec()) {
+        model->setQuery(query);
+        model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+            model->setHeaderData(1, Qt::Horizontal, QObject::tr("POIDS"));
+            model->setHeaderData(2, Qt::Horizontal, QObject::tr("VOLUME"));
+            model->setHeaderData(3, Qt::Horizontal, QObject::tr("ETAT"));
+
+    } else {
+        qDebug() << "Erreur lors de l'exécution de la requête :" << query.lastError().text();
+    }
+    return model;
+}
+
+
 void  Colis::displayItemDetails(int id)
 {
     QSqlQuery query;
@@ -195,3 +218,214 @@ QSqlQueryModel *  Colis::sortDatabaseByVolume()
        model->setHeaderData(3, Qt::Horizontal, QObject::tr("ETAT"));
        return model;
 }
+bool Colis::exportDataToPDF(QTableView* tableView)
+{
+
+    QPdfWriter pdfWriter("colis_report.pdf");
+        pdfWriter.setPageSize(QPageSize(QPageSize::A4));
+        QPainter painter(&pdfWriter);
+
+        // Start painting the PDF
+        painter.begin(&pdfWriter);
+
+        // Render the label's text to the PDF
+      //  painter.drawText(100, 100, label->text(), QTextOption(Qt::AlignLeft));
+
+        // Render the table view to the PDF
+        tableView->render(&painter);
+
+        // End painting
+        painter.end();
+
+        // Set the PDF file path
+        pdfFilePath = "colis_report.pdf";
+
+        // Return true if export is successful
+        return true;
+}
+ /*QWidget* Colis::createColisCharts()
+ {
+
+     QSqlQuery query("SELECT * FROME COLIS");
+ //QPieSlice *pieSlice;
+
+
+     while (query.next()) {
+         QString id = query.value(0).toString();
+         double poids = query.value(1).toDouble();
+         double volume = query.value(2).toDouble();
+         QString etat = query.value(3).toString();
+
+         // Check for valid data and skip if necessary
+         if (id.isEmpty() || poids == 0.0 || volume == 0.0) {
+             continue;
+         }
+
+         // Create a bar set for each attribute
+         QBarSet *barSet = new QBarSet("ID: " + id);
+         *barSet << poids << volume;
+
+         // Add the bar set to the bar series
+         barSeries->append(barSet);
+
+         // Create a pie slice for each etat
+         QPieSlice *pieSlice = pieSeries->append(etat, poids);
+         pieSlice->setLabel(QString("%1: %2").arg(etat).arg(poids));
+     }
+     QWidget *widget = new QWidget();
+        QVBoxLayout *layout = new QVBoxLayout(widget);
+        layout->addWidget(barChartView);
+        layout->addWidget(pieChartView);
+        QGraphicsScene *scene = new QGraphicsScene();
+        //   scene->addItem(pieSlice);
+
+           // Create a view and set the scene
+           QGraphicsView *view = new QGraphicsView(scene);
+
+           // Set up the window
+           view->setRenderHint(QPainter::Antialiasing, true);
+           view->setWindowTitle("Chart Window");
+           view->resize(800, 600);
+
+           // Show the window
+           view->show();
+
+        // Return the widget
+        return widget;
+
+ }*/
+  int Colis::cassenum()
+  {
+      int num=0;
+     QSqlQuery query("SELECT ETAT FROM COLIS");
+     while (query.next()) {
+          QString etat = query.value(0).toString();
+          if (etat == "casse") {
+
+             num++;
+          }
+
+     }
+     return num;
+  }
+  int Colis::casseNonnum()
+  {
+      int num=0;
+     QSqlQuery query("SELECT ETAT FROM COLIS");
+     while (query.next()) {
+          QString etat = query.value(0).toString();
+          if (etat == "non casse") {
+
+             num++;
+          }
+
+     }
+     return num;
+  }
+ QChartView* Colis::createPieChart()
+ {
+
+int casseCount = 0;
+int nonCasseCount =0;
+QPieSeries *series = new QPieSeries();
+
+QSqlQuery query("SELECT ETAT FROM COLIS ");
+
+ while (query.next()) {
+
+        QString etat = query.value(0).toString();
+        if(etat=="casse")
+        {
+            casseCount++;
+        }
+        else
+        {
+            nonCasseCount++;
+        }}
+
+       if (casseCount >= 0)
+       {
+           QPieSlice *casseSlice = series->append("Casse", casseCount);
+           casseSlice->setLabel(QString("Casse: %1").arg(casseCount));
+       }
+
+       if (nonCasseCount >=0)
+       {
+           QPieSlice *nonCasseSlice = series->append("Non Casse", nonCasseCount);
+           nonCasseSlice->setLabel(QString("Non Casse: %1").arg(nonCasseCount));
+      }
+
+     QChart *chart = new QChart();
+     chart->addSeries(series);
+     chart->setTitle("Etat Distribution");
+
+     QChartView *chartView = new QChartView(chart);
+     chartView->setRenderHint(QPainter::Antialiasing);
+
+     return chartView;
+ }
+
+ QChartView* Colis::createPieChartPoids()
+ {
+
+int poids1 = 0;
+int poids2 =0;
+int poids3=0;
+int poids4=0;
+QPieSeries *series = new QPieSeries();
+
+QSqlQuery query("SELECT POIDS FROM COLIS ");
+
+ while (query.next()) {
+
+        int poids = query.value(0).toInt();
+        if(poids>0&&poids<2)
+        {
+            poids1++;
+        }
+        else if(poids>2&&poids<10)
+        {
+            poids2++;
+        }
+        else if(poids>10&&poids<20)
+        {
+            poids3++;
+        }
+        else
+        {
+            poids4++;
+        }
+
+ }
+
+       if (poids1 >= 0)
+       {
+           QPieSlice *casseSlice = series->append("0-2", poids1);
+           casseSlice->setLabel(QString("0-2: %1").arg(poids1));
+       }
+
+       if (poids2 >=0)
+       {
+           QPieSlice *nonCasseSlice = series->append("2-10", poids2);
+           nonCasseSlice->setLabel(QString("2-10: %1").arg(poids2));
+      }
+       if (poids3 >=0)
+       {
+           QPieSlice *nonCasseSlice = series->append("10-20", poids3);
+           nonCasseSlice->setLabel(QString("10-20: %1").arg(poids3));
+      }
+       if (poids4 >=0)
+       {
+           QPieSlice *nonCasseSlice = series->append("20>", poids4);
+           nonCasseSlice->setLabel(QString("20: %1").arg(poids4));
+      }
+     QChart *chart = new QChart();
+     chart->addSeries(series);
+     chart->setTitle("Etat Distribution");
+
+     QChartView *chartView = new QChartView(chart);
+     chartView->setRenderHint(QPainter::Antialiasing);
+
+     return chartView;
+ }
+

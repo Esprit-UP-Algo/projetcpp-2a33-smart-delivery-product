@@ -6,7 +6,14 @@
 
 QT       += core gui sql
 QT       += sql
+QT += location positioning
+QT += quickwidgets
+QT += core gui
+QT += core
 CONFIG += console
+QT += charts
+
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Atelier_Connexion
@@ -45,3 +52,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Map.qrc

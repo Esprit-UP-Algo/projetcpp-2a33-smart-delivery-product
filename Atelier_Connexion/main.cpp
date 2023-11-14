@@ -3,10 +3,14 @@
 #include <QMessageBox>
 #include "connection.h"
 #include <QSqlQueryModel>
-
+#include <QVariant>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+//file:///C:/Users/zied/Desktop/ProjetCpp/delete-icon.png
+    QPushButton button("");
+
+
     MainWindow w;
     Connection c;
     bool test=c.createconnect();

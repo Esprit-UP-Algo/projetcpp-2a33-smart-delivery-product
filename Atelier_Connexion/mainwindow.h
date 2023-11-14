@@ -3,8 +3,14 @@
 #include"colis.h"
 #include <QMainWindow>
 #include <QSqlQueryModel>
+#include <QPushButton>
 
 
+#include<QVariant>
+#include<QtCore>
+#include<QtGui>
+#include<QtQuick>
+#include <QVariant>
 namespace Ui {
 class MainWindow;
 }
@@ -40,9 +46,19 @@ private slots:
 
     void on_tri_b_clicked();
 
+    void on_Rech_3_textChanged(const QString &arg1);
+
+    void on_pdf_clicked();
+
+    void on_stat_clicked();
+
 private:
     Ui::MainWindow *ui;
     Colis Ctmp;
+ signals:
+   void setCenterPosition(QVariant,QVariant);
+    void setLocationMarking(QVariant,QVariant);
 };
+
 
 #endif // MAINWINDOW_H
