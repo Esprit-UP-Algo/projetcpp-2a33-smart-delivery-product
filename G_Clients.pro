@@ -3,6 +3,7 @@
 #include<QtSql/QSqlQuery>
 
 QT       += core gui sql
+   QT += printsupport charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,12 +24,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     clients.cpp \
     connection.cpp \
+    feedback.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     clients.h \
     connection.h \
+    feedback.h \
     mainwindow.h
 
 FORMS += \
