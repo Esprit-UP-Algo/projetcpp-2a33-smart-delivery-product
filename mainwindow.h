@@ -3,7 +3,7 @@
 #include"clients.h"
 #include <QMainWindow>
 #include "feedback.h"
-
+#include "arduino.h"
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
@@ -53,11 +53,17 @@ private slots:
     void on_pb_FeedBack_clicked();
 
     void stat();
+    void feedback_statt();
+
 
 private:
     Ui::MainWindow *ui;
     Clients C ;
     FeedBack F ;
-     QChartView *ClientsStatisticsChartView;
+    QChartView *ClientsStatisticsChartView;
+
+
+    QByteArray data; // variable contenant les données reçues
+    Arduino A; // objet temporaire
 };
 #endif // MAINWINDOW_H

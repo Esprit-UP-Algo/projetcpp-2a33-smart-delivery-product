@@ -17,8 +17,8 @@
    <widget class="QTabWidget" name="statistique">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>30</y>
+      <x>40</x>
+      <y>20</y>
       <width>891</width>
       <height>541</height>
      </rect>
@@ -33,7 +33,7 @@ background-color:rgb(49, 70, 207)
 </string>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -1324,16 +1324,16 @@ border-radius: 10px ;
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_3">
+    <widget class="QWidget" name="feedback_stat">
      <attribute name="title">
       <string>FeedBack</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>10</y>
-        <width>881</width>
+        <width>381</width>
         <height>481</height>
        </rect>
       </property>
@@ -1694,30 +1694,33 @@ border-radius: 10px ;
         <string>ID Client</string>
        </property>
       </widget>
-      <widget class="QTableView" name="tab_FeedBack">
-       <property name="geometry">
-        <rect>
-         <x>80</x>
-         <y>0</y>
-         <width>51</width>
-         <height>31</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_27">
-       <property name="geometry">
-        <rect>
-         <x>360</x>
-         <y>130</y>
-         <width>491</width>
-         <height>301</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
      </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>50</y>
+        <width>141</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QTableView" name="tab_FeedBack">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>20</y>
+        <width>491</width>
+        <height>241</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>label_27</zorder>
+     <zorder>groupBox_4</zorder>
+     <zorder>tab_FeedBack</zorder>
     </widget>
     <widget class="QWidget" name="stat">
      <property name="toolTipDuration">
@@ -1746,8 +1749,8 @@ border-radius: 10px ;
       <widget class="QLabel" name="label_26">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>20</y>
+         <x>60</x>
+         <y>30</y>
          <width>71</width>
          <height>91</height>
         </rect>

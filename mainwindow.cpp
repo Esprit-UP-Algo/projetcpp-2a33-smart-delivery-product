@@ -21,7 +21,7 @@
 #include <QtCharts/QPieSeries>
 #include <QtCharts>
 #include <QPieSlice>
-
+#include"arduino.h"
 #include "feedback.h"
 
 
@@ -29,9 +29,22 @@ MainWindow::MainWindow(QWidget *parent):
      QMainWindow(parent) ,
     ui(new Ui::MainWindow)
 {
+
+    // arduino ******************************************************************
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+        switch(ret){
+        case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+            break;
+        case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+           break;
+        case(-1):qDebug() << "arduino is not available";
+        }
+
+
     ui->setupUi(this);
     ui->le_IDC->setValidator(new QIntValidator(0,9999999,this));
     ui->tab_Clients->setModel(C.afficher());
+    ui->tab_FeedBack->setModel(C.afficher());
   //  ui->comboBox_supp->setModel(C.afficher());
 
    //  connect(ui->pb_FeedBack, &QPushButton::clicked, this, &MainWindow::submitFeedback);
@@ -39,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent):
 
        //
 
-
+/*
         QBarSet *set = new QBarSet("average rating");
             float calculmoy=F.compteretatiiii();
 
@@ -79,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent):
             chartView->setParent(ui->label_27);
 
 
-
+*/
 
 }
 
@@ -88,6 +101,59 @@ MainWindow::~MainWindow()
     clearClients_StatisticsChart();
     delete ui;
 }
+
+
+void MainWindow::feedback_statt()
+{
+     qDebug() << "Updating Clients Statistics Chart feedback_stat";
+    //  connect(ui->pb_FeedBack, &QPushButton::clicked, this, &MainWindow::submitFeedback);
+     ClientsStatisticsChartView = nullptr;
+
+        //
+
+
+         QBarSet *set = new QBarSet("average rating");
+             float calculmoy=F.compteretatiiii();
+
+                 *set <<calculmoy<<100;
+
+             QBarSeries *series = new QBarSeries();
+
+             series->append(set);
+
+
+
+             QChart *chart = new QChart();
+
+             chart->addSeries(series);
+
+             chart->setTitle("Clients");
+
+             chart->setAnimationOptions(QChart:: SeriesAnimations);
+
+             chart->resize(450,300); //tbadel el kobr mtaa el stat selon el label
+              QStringList categories;
+
+             categories << " rating " ; //Selon etat mteek kifeh
+
+             QBarCategoryAxis *axis = new QBarCategoryAxis();
+
+             axis->append(categories);
+
+             chart->createDefaultAxes();
+
+             chart->setAxisX(axis,series);
+
+
+
+             QChartView *chartView = new QChartView(chart);
+
+             chartView->setParent(ui->feedback_stat);
+             chartView->setGeometry(430, 240, 450, 270);
+             chartView->show();
+
+}
+
 
 void MainWindow::stat()
 {
@@ -100,8 +166,8 @@ void MainWindow::stat()
 
              int countEtat0 = C.compteretat0();
                  int countEtat1 = C.compteretat1();
-                 * set0 <<countEtat1<<10 ; //hedheya el bar loula tnajem tabdel el valeur 40
-                 * set1 << countEtat0<<10;
+                 * set0 <<countEtat1<<5 ; //hedheya el bar loula tnajem tabdel el valeur 40
+                 * set1 << countEtat0<<5;
              QBarSeries *series = new QBarSeries();
 
 
@@ -381,6 +447,10 @@ void MainWindow::on_pb_fidelite_clicked()
     // Appel de la fonction appliquerPromotion avec la valeur seuil de votre choix
 
        C.Fidelite(ui->id_fidele->text().toInt(),200);
+       QMessageBox::information(nullptr,QObject::tr("Reduction Client"),
+       QObject::tr("Reduction faite avec success.\n"
+                   ""),QMessageBox::Ok);
+
 }
 
 
@@ -392,9 +462,14 @@ void MainWindow::on_statistique_tabBarClicked(int index)
 {
     int statisticsTabIndex = ui->statistique->indexOf(ui->stat);
     int stattabindex = ui->statistique->indexOf(ui->statFB);
+    int stattab_feedback_index = ui->statistique->indexOf(ui->feedback_stat);
 
     if (index == stattabindex) {
         stat();
+    }
+
+    if (index == stattab_feedback_index) {
+        feedback_statt();
     }
     if (index == statisticsTabIndex) {
         update_Clients_StatisticsChart();
@@ -440,6 +515,8 @@ void MainWindow::update_Clients_StatisticsChart()
     chart->addSeries(series);
     chart->setTitle("Répartition par nombre de commande ");
     chart->setBackgroundBrush(QBrush(QColor("#F5F5DC")));
+    chart->setAnimationOptions(QChart:: SeriesAnimations);
+
 
     ClientsStatisticsChartView = new QChartView(chart);
     ClientsStatisticsChartView->setRenderHint(QPainter::Antialiasing);
@@ -456,13 +533,6 @@ void MainWindow::clearClients_StatisticsChart()
         ClientsStatisticsChartView = nullptr;
     }
 }
-
-
-
-
-
-
-
 
 
 

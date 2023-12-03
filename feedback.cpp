@@ -49,7 +49,20 @@ bool FeedBack::ajout_FeedBack()
 }
 
 
+QSqlQueryModel* FeedBack::afficher()
+{
+    QSqlQueryModel* model=new QSqlQueryModel();
 
+      model->setQuery("SELECT* FROM FEEDBACK");
+      model->setHeaderData(0, Qt::Horizontal, QObject::tr("Identifiant"));
+      model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
+      model->setHeaderData(2, Qt::Horizontal, QObject::tr("Prenom"));
+      model->setHeaderData(3, Qt::Horizontal, QObject::tr("Adresse"));
+      model->setHeaderData(4, Qt::Horizontal, QObject::tr("Email"));
+      model->setHeaderData(5, Qt::Horizontal, QObject::tr("Numéro"));
+
+  return model;
+}
 
 
 int FeedBack::compteretat1()

@@ -25,6 +25,8 @@ public:
     int compteretat2();
     float compteretatiiii();
 
+    QSqlQueryModel* afficher();
+
 
 };
 
